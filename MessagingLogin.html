@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MalcMessaging - Login</title>
+    <style>
+        body {
+            background: url('https://www.transparenttextures.com/patterns/old-map.png');
+            font-family: 'Comic Sans MS', cursive;
+            color: #000000;
+            background-color: #00ff00;
+            text-align: center;
+        }
+        .login-container {
+            width: 350px;
+            margin: 100px auto;
+            background: #ffff00;
+            border: 5px dashed #ff00ff;
+            padding: 20px;
+        }
+        .login-container h2 {
+            color: #0000ff;
+        }
+        input {
+            width: 95%;
+            padding: 10px;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        .hint {
+            font-size: 14px;
+            color: red;
+            margin-bottom: 15px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            background: #ff0000;
+            color: yellow;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0000ff;
+            color: white;
+        }
+    </style>
+    <script>
+        function login() {
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+            var correctUsername = "UrbanMalcolm44@Hotmail.com"; // Set the correct username
+            var correctPassword = "Milo"; // Set the correct password (case-sensitive)
+
+            if (username === correctUsername && password === correctPassword) {
+                alert("Login Successful! Redirecting...");
+                window.location.href = "Chat.html"; // Redirect to chat page
+            } else {
+                alert("Incorrect username or password! Please check your credentials and ensure correct letter case.");
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="login-container" class="login-container">
+        <h2>Login to MalcMessaging</h2>
+        <input type="text" id="username" placeholder="Username or Email"><br>
+        <input type="password" id="password" placeholder="Password"><br>
+        <p class="hint">Hint: Your favorite pet's name.</p>
+        <button onclick="login()">Login</button>
+    </div>
+</body>
+</html>

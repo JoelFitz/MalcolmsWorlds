@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hacked Folder System</title>
+    <style>
+        body {
+            font-family: monospace;
+            background-color: black;
+            color: green;
+            padding: 20px;
+            text-align: center;
+        }
+        .content {
+            display: none;
+            text-align: left;
+        }
+        .folder, .file {
+            cursor: pointer;
+            display: block;
+            margin-left: 20px;
+        }
+        .folder::before {
+            content: '[+] ';
+        }
+        .folder.open::before {
+            content: '[-] ';
+        }
+        .file::before {
+            content: '- ';
+        }
+        .hidden {
+            display: none;
+        }
+        .preview {
+            margin-top: 20px;
+            display: none;
+            text-align: center;
+        }
+        .preview-content {
+            max-width: 80%;
+            border: 2px solid green;
+            padding: 5px;
+            background: black;
+            color: green;
+            white-space: pre-wrap;
+            text-align: left;
+        }
+        .close-btn {
+            display: block;
+            margin: 10px auto;
+            padding: 5px 10px;
+            background: green;
+            color: black;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+        }
+        .close-btn:hover {
+            background: darkgreen;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="passwordPopup">
+        <h2>ACCESS RESTRICTED</h2>
+        <p>Enter Password:</p>
+        <input type="password" id="passwordInput">
+        <button onclick="checkPassword()">Enter</button>
+    </div>
+
+    <div id="content" class="content">
+        <h2>ACCESSING FILE SYSTEM...</h2>
+
+        <div class="folder" onclick="toggleFolder('folder1', this)">DOCUMENTS</div>
+        <div id="folder1" class="hidden">
+            <div class="file" onclick="showText('RESUME.TXT')">RESUME.TXT</div>
+            <div class="file" onclick="showText('PASSWORDS.DOC')">PASSWORDS.DOC</div>
+            <div class="folder" onclick="toggleFolder('subfolder1', this)">REPORTS</div>
+            <div id="subfolder1" class="hidden">
+                <div class="file" onclick="showText('REPORT.TXT')">REPORT.TXT</div>
+                <div class="file" onclick="showText('VHS Evidence Report.Doc')">VHS Evidence Report.Doc</div>
+            </div>
+        </div>
+
+        <div class="folder" onclick="toggleFolder('folder2', this)">PICTURES</div>
+        <div id="folder2" class="hidden">
+            <div class="file" onclick="showImage('Images/IDBadge.jpg')">ID.jpg</div>
+            <div class="folder" onclick="toggleFolder('folder3', this)">SURVAILANC CAPTURES</div>
+            <div id="folder3" class="hidden">
+                <div class="file" onclick="showImage('Images/SurvailanceCapture2.jpg')">Camera13Capture.jpg</div>
+                <div class="file" onclick="showImage('Images/SurvailanceCapture1.jpg')">Camera1Capture.jpg</div>
+                <div class="file" onclick="showImage('Images/SurvailanceCapture3.jpg')">Camera4Capture.jpg</div>
+            </div>
+        </div>
+
+        <div id="imagePreview" class="preview">
+            <h3>Preview:</h3>
+            <img id="previewImg" src="" alt="Image Preview">
+            <button class="close-btn" onclick="closePreview()">Close</button>
+        </div>
+
+        <div id="textPreview" class="preview">
+            <h3>Text Preview:</h3>
+            <pre id="previewText" class="preview-content"></pre>
+            <button class="close-btn" onclick="closeTextPreview()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        function toggleFolder(id, element) {
+            var folder = document.getElementById(id);
+            if (folder) {
+                folder.classList.toggle('hidden');
+                element.classList.toggle('open');
+            }
+        }
+
+        function checkPassword() {
+            var password = document.getElementById('passwordInput').value;
+            var correctPassword = "Brugh4302";
+            
+            if (password === correctPassword) {
+                document.getElementById('passwordPopup').style.display = 'none';
+                document.getElementById('content').style.display = 'block';
+            } else {
+                alert("ACCESS DENIED! Incorrect password.");
+            }
+        }
+
+        function showImage(imageName) {
+            var previewImg = document.getElementById("previewImg");
+            previewImg.src = imageName;
+            previewImg.alt = imageName;
+            document.getElementById("imagePreview").style.display = "block";
+        }
+
+        function closePreview() {
+            document.getElementById("imagePreview").style.display = "none";
+        }
+
+        function showText(fileName) {
+            var textPreview = document.getElementById("textPreview");
+            var previewText = document.getElementById("previewText");
+            
+            var fileContents = {
+                "RESUME.TXT": "Darren Wilkins\nJunior Reasearcher\nExperience: 5 years\nSkills: Biology, Thermal Tracking\n",
+                "PASSWORDS.DOC": "Passwords\nStaff Login: ZX435NY\nArchive Security Clearance 1:AF352UK",
+                "REPORT.TXT": "CONFIDENTIAL REPORT\nDepartment of Anomalous Research and Containment\nIncident Report: Missing Persons Investigation – [REDACTED]\n\nDate: 15th July 1999\nTime of Initial Entry: 23:00 hrs\nLocation: Sewage tunnel beneath the Floral Horizons Hotel\n\nIncident Overview\nFollowing multiple reports of missing persons in the [REDACTED] area, a research team was dispatched to investigate. Through interviews with local residents, the team successfully tracked the potential source of the disappearances to a sewage tunnel system beneath the Floral Horizons Hotel.\n\nTimeline of Events\n23:00 hrs: A team of six researchers entered the tunnel with the objective of locating and gathering intelligence on Entity B5.\n\n23:32 hrs: Two of the six researchers broke away from the group and ceased responding to communication attempts. The remaining four researchers were instructed to proceed with the investigation while maintaining vigilance for any incoming transmissions.\n\n01:30 hrs: The research team advanced into a secondary pipeline beneath the main sewer system connected to the entrance.\n\n02:46 hrs: The team reported visual contact with a large, unidentified organic mass situated behind a locked metal fence within one of the tunnels. The mass was described as having a fleshy texture and emitting a pungent odor consistent with decomposing meat.\n\n02:55 hrs: The two missing researchers were discovered deceased, suspended from the tunnel ceiling by a viscous, black substance. Post-mortem observations indicate the bodies were missing their eyes and exhibited significant hemorrhaging from the auditory canals.\n\n03:01 hrs: All communications with the research team were abruptly lost.\n\n05:21 hrs: A faint whistling melody was detected across all communication devices associated with the research team. The melody remains unidentified and does not correspond to any known musical composition.\n\nCurrent Status and Ongoing Investigation\n- Containment Measures: All known entrances to the sewer system are now under continuous 24/7 surveillance.\n- Evidence Recovery: A damaged handheld VHS camera was recovered near Entrance C. Restoration efforts are underway in an attempt to retrieve any usable footage that may provide further insights into the incident.\n- Further Actions: Additional research and containment measures are being developed in response to the unknown entity present within the sewer system.\n\nEnd of Report\nAuthorized Personnel Only\n",
+                
+            };
+
+            previewText.textContent = fileContents[fileName] || "File content not available.";
+            textPreview.style.display = "block";
+        }
+
+        function closeTextPreview() {
+            document.getElementById("textPreview").style.display = "none";
+        }
+    </script>
+
+</body>
+</html>
